@@ -10,6 +10,11 @@ export function useActiveTabManager(tabs, storageKey) {
     activieTab.value = tabName.toLowerCase()
   }, 300)
 
+  function replaceActiveTabInUrl(tabName){
+    const newUrl = window.location.pathname + window.location.search + '#' + tabName.toLowerCase()
+    window.history.replaceState(null, '', newUrl)
+  }
+
   function setActiveTabInUrl(tabName) {
     window.location.hash = '#' + tabName.toLowerCase()
   }
@@ -46,7 +51,7 @@ export function useActiveTabManager(tabs, storageKey) {
 
     let lastVisitedTab = getActiveTabFromLocalStorage()
     if (lastVisitedTab) {
-      setActiveTabInUrl(lastVisitedTab)
+      replaceActiveTabInUrl(lastVisitedTab)
       return getTabIndex(lastVisitedTab)
     }
 
